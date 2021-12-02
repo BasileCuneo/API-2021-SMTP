@@ -1,0 +1,6 @@
+ceci est le sujet
+voici le corps du mail
+on peut mettre des retours
+a la lignes
+
+et tout fonctionne
