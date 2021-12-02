@@ -5,6 +5,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ConfigManager read the different config from the config files and store them.
@@ -32,11 +35,12 @@ public class ConfigManager {
      *
      */
     private ArrayList<ArrayList<String>> groupsEmail;
+
     private final String victimsPath = "/victims.txt";
     private final String messagesPath = "/messages";
     private int nGroups;
     /**
-     * The list of victim mails
+     * Configure the the list of victim mails
      * @param rootPath the root folder for the config files
      * @param n the number of groups
      */
@@ -75,6 +79,7 @@ public class ConfigManager {
                 }
                 addresses.add(addr);
             }
+            readerVictims.close();
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("Unable to read victims addresses");
@@ -100,16 +105,20 @@ public class ConfigManager {
                 while((msg = readerMessages.readLine()) != null) {
                     messages.get(messages.size() - 1).body += msg + "\n";
                 }
-
+                readerMessages.close();
             }
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("Unable to read messages");
         }
-
+        //like the we take "random" addr and messages
         Collections.shuffle(messages);
         Collections.shuffle(addresses);
     }
+
+    /**
+     * generate the groups from the list of addresses
+     */
     private void generateGroups(){
 
         groupsEmail = new ArrayList<>();
@@ -119,7 +128,13 @@ public class ConfigManager {
         }
 
         //populate the groups
-        int nbAddressesPerGroup = addresses.size() / nGroups;
+        int nbAddressesPerGroup = 0;
+        try{
+            nbAddressesPerGroup = addresses.size() / nGroups;
+        }catch(ArithmeticException e){
+            System.out.println("Error while calculating the group's size");
+        }
+
         int nbAddressesAdded = 0;
         if(nbAddressesPerGroup < 3){
            throw new IllegalArgumentException("The number of victims is too small");
@@ -137,20 +152,31 @@ public class ConfigManager {
             groupsEmail.get(groupsEmail.size()-1).add(addresses.get(i));
         }
     }
+
+    /**
+     * retrieve the email address of the victims
+     * @return a list of list of string,
+     * each list contains the email addresses of the victims of a group
+     */
     public ArrayList<ArrayList<String>> getGroupsEmail(){
         if(groupsEmail == null) {
             generateGroups();
         }
         return groupsEmail;
     }
+
+    /**
+     * @throws RuntimeException if the messages are not stored in memory i.e. the object
+     * wasn't initialized with the constructor correctly
+     *
+     * @return a random mail ready to be sent ;)
+     */
     public MailStruct getRandomMail(){
+
         if(messages == null) {
             throw new RuntimeException("object was not initialized correctly");
         }
-        int min = 0;
-        int max = messages.size();
-        //get random in [min, max)
-        int i = (int) ((Math.random() * (max - min)) + min);
+        int i = new Random().nextInt(messages.size());
         return messages.get(i);
     }
 

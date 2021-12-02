@@ -26,20 +26,12 @@ public class Client {
     public static void main(String[] args)  {
 
         ConfigManager config = new ConfigManager("/Users/joris/Documents/école/HEIG-VD/Cours/semester-3/API/labo/API-2021-SMTP/target/classes/ch/heigvd/api/clientSMTP", 4);
-        int i =0;
-        for(List<String> l : config.getGroupsEmail()) {
-            System.out.println("Group : " + ++i + "############################");
-            for(String addr : l){
-                System.out.println(addr);
-            }
-        }
-
 
         System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
 
-        Socket clientSocket;
-        BufferedWriter clientOut;
-        BufferedReader clientIn;
+        Socket clientSocket = null;
+        BufferedWriter clientOut = null;
+        BufferedReader clientIn = null;
         try {
             clientSocket = new Socket("127.0.0.1", 25);
             clientOut = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8));
@@ -58,9 +50,32 @@ public class Client {
             }
 
 
-
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error while creating socket", e);
+            try{
+                if(clientOut != null)
+                    clientOut.close();
+                if(clientIn != null)
+                    clientIn.close();
+                if(clientSocket != null)
+                    clientSocket.close();
+                return;
+            }catch (IOException e1){
+                e1.printStackTrace();
+
+            }
+
+        }
+        try{
+            if(clientOut != null)
+                clientOut.close();
+            if(clientIn != null)
+                clientIn.close();
+            if (clientSocket != null)
+                clientSocket.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
 
         }
 
