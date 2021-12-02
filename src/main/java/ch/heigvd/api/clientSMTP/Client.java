@@ -80,7 +80,7 @@ public class Client {
             System.out.println("EHLO accepted");
             clientOut.write(genMailFrom(from));
             clientOut.flush();
-            if(!checkResponse(clientIn)) {
+            if(checkError(clientIn)) {
                 System.out.println("MAIL FROM not accepted");
                 return false;
             }
@@ -88,7 +88,7 @@ public class Client {
             for(String addr : to) {
                 clientOut.write(genRcptTo(addr));
                 clientOut.flush();
-                if(!checkResponse(clientIn)) {
+                if(checkError(clientIn)) {
                     System.out.println("RCPT TO not accepted");
                     return false;
                 }
@@ -104,7 +104,7 @@ public class Client {
 
             clientOut.write(genMessage(fakeFrom,to, subject, message));
             clientOut.flush();
-            if(!checkResponse(clientIn)){
+            if(checkError(clientIn)){
                 System.out.println("Message not accepted");
                 return false;
             }
@@ -136,13 +136,13 @@ public class Client {
         return true;
     }
 
-    static private boolean checkResponse(BufferedReader client) {
+    static private boolean checkError(BufferedReader client) {
         try{
             String response = client.readLine();
-            return response.startsWith("250");
+            return !response.startsWith("250");
         }catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return true;
         }
     }
     static private boolean checkResponse(BufferedReader client,String expectedCode) {
@@ -160,21 +160,28 @@ public class Client {
     }
 
     static private String genMailFrom(String senderAddr) {
-        return "MAIL FROM:<" + senderAddr + ">"+crlf;
+        //return "MAIL FROM:<" + senderAddr + ">"+crlf;
+        return "MAIL FROM: <" + senderAddr + ">"+crlf;
+
     }
 
     static private String genRcptTo(String receiverAddr) {
-        return "RCPT TO:<" + receiverAddr + ">"+crlf;
+        return "RCPT TO: <" + receiverAddr + ">"+crlf;
     }
 
 
 
     static private String genMessage(String fakeFrom, List<String> to, String subject, String body){
-        StringBuilder result = new StringBuilder("From: <" + fakeFrom + ">"+crlf+"To: ");
+        //StringBuilder result = new StringBuilder("From: <" + fakeFrom + ">"+crlf+"To:
+        // ");
+        StringBuilder result = new StringBuilder("From: " + fakeFrom +crlf+"To: ");
+
         for(String addr : to) {
-            result.append("<").append(addr).append(">,");
+            //result.append("<").append(addr).append(">, ");
+            result.append(addr).append(", ");
+
         }
-        result.deleteCharAt(result.toString().length() - 1);
+        result.deleteCharAt(result.toString().length() - 2);
         result.append(crlf);
 
         result.append("Subject: ").append(subject).append(crlf).append(crlf);
