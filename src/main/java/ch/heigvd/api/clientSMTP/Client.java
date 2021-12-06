@@ -26,7 +26,7 @@ public class Client {
      */
     public static void main(String[] args)  {
         int nGroups = 0;
-        try{//ouais et ocmme ça on a l'usage que 1 fois c'est mieux, tu as raison
+        try{
             if(args.length != 1){
                 throw new IllegalArgumentException("Usage: java -jar client <nGroup>");
 
@@ -46,7 +46,7 @@ public class Client {
         BufferedWriter clientOut = null;
         BufferedReader clientIn = null;
         try {
-            clientSocket = new Socket("127.0.0.1", 25);
+            clientSocket = new Socket("127.0.0.1", 2525);//pour mockmock
             clientOut = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8));
             clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
             System.out.println(clientIn.readLine());

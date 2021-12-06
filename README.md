@@ -65,7 +65,7 @@ Your report MUST include the following sections:
 
 ## Description
 Ce projet simule une campagne de fishing par email. 
-Un serveur smtp est disponible à travers MockMock.
+Un serveur smtp est disponible à travers MockMock afin de ne pas générer de vrais mails.
 Features:  
  - *définir une liste de victime* 
  - *définir des messages*, 
@@ -84,17 +84,16 @@ git clone https://github.com/BasileCuneo/API-2021-SMTP
 ```bash
 cd MockMock && mvn clean package
 cd ../API-2021-SMTP && mvn clean package
-cp ../MockMock/target/MockMock-1.4.0.one-jar.jar .#copie l'archive dans le dossier courant
+cp ../MockMock/target/MockMock-1.4.0.one-jar.jar .
 ``` 
-3. Construire l'image docker
+3. Construire l'image docker 
 ```bash
-
-DOCKER_BUILDKIT=1 sudo docker build -t <tonTag> .
+DOCKER_BUILDKIT=1 sudo docker build -t mockmock .
 #veillez à ne pas déjà avoir une image avec ce tag
 ```
 4. Lancer le serveur MockMock
 ```bash
-sudo docker run -d -p 8282:8282 -p 2525:25 <tonTag>
+sudo docker run -d -p 8282:8282 -p 2525:25 mockmock
 ```
 5. lancer un navigateur web et aller sur http://localhost:8282/
 6. Configurer les victimes (lire la partie configuration), si aucune configuration n'est faite le serveur utilise les victimes par défaut.
@@ -105,11 +104,13 @@ java -jar target/ClientSMTP-1.0.jar  <nGroup>
 ```
 9. Vérifier que les emails ont bien été envoyés en regardant votre navigateur web.
 
-
+# Notes
+Pour faire un vrai email et non pas contacter un serveur smtp fictif (mockmock), il faut changer l'adresse ip du server
+smtp dans le code et remettre le port a 25 et non 2525.
 
 ## Configuration du projet
 ### Ajouter des messages
-Le répértoire contenant les différents fichiers de messages est le répértoire API-2021-SMTP/src/configuration/messages
+Le répertoire contenant les différents fichiers de messages est le répértoire API-2021-SMTP/src/configuration/messages
 Chaque message est configuré à partir d'un fichier .txt, il faut donc créer un nouveau fichier pour chaque nouveau message.
 
 Concernant le format des fichiers contenant des messages, la première ligne constitue le sujet et le reste du fichier le corps du message.
@@ -125,7 +126,7 @@ Ceci est toujours le corps du message et le retour à la ligne fonctionne<Fin du
 Le fichier contenant la liste des victimes est le fichier API-2021-SMTP/src/configuration/victims.txt
 
 Pour y ajouter une victime, il suffit d'ajouter une nouvelle ligne avec l'adresse email voulue.
-
+Les adresses doivent être correcte, i.e. avec un @ et un .
 ### Définir le nombre de groupes de victimes
 Le nombre de groupes est à renseigner en argument de la ligne de commande lors du lancement du client.
 
@@ -133,7 +134,7 @@ En reprenant ce qui a été dit plus tôt, pour exécuter l'application client, 
 
 ## Description et points clés de l'implémentation.
 
-Notre implémentation est séparée en deux parties: le client et le configManager.
+Notre implémentation est séparée en deux parties: le Client et le configManager.
 
 ### Client
 
