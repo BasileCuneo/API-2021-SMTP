@@ -61,3 +61,76 @@ Your report MUST include the following sections:
 * The [mailtrap](<https://mailtrap.io/>) online service for testing SMTP
 * The [SMTP RFC](<https://tools.ietf.org/html/rfc5321#appendix-D>), and in particular the [example scenario](<https://tools.ietf.org/html/rfc5321#appendix-D>)
 * Testing SMTP with TLS: `openssl s_client -connect smtp.mailtrap.io:2525 -starttls smtp -crlf`
+
+
+## Description
+Ce projet simule une campagne de fishing par email. 
+Un serveur smtp est disponible à travers MockMock.
+Features:  
+ - *définir une liste de victime* 
+ - *définir des messages*, 
+ 
+les messages sont envoyés par mail aux victimes indiqués.
+
+## Getting started 
+Prérequis:
+Docker, maven et java 11.
+1. Cloner le projet MockMock disponible ici :https://github.com/HEIGVD-Course-API/MockMock et ce projet
+```bash
+git clone https://github.com/HEIGVD-Course-API/MockMock
+git clone https://github.com/BasileCuneo/API-2021-SMTP
+```
+2. Compiler les projets et déplacer l'archive MockMock dans le répertoire API
+```bash
+cd MockMock && mvn clean package
+cd ../API-2021-SMTP && mvn clean package
+cp ../MockMock/target/MockMock-1.4.0.one-jar.jar .#copie l'archive dans le dossier courant
+``` 
+3. Construire l'image docker
+```bash
+
+DOCKER_BUILDKIT=1 sudo docker build -t <tonTag> .
+#veillez à ne pas déjà avoir une image avec ce tag
+```
+4. Lancer le serveur MockMock
+```bash
+sudo docker run -d -p 8282:8282 -p 2525:25 <tonTag>
+```
+5. lancer un navigateur web et aller sur http://localhost:8282/
+6. Configurer les victimes (lire la partie configuration), si aucune configuration n'est faite le serveur utilise les victimes par défaut.
+7. Configurer les messages (lire la partie configuration), si aucune configuration n'est faite le serveur utilise les messages par défaut.
+8. Lancer le client qui génère les emails de phishing en lui donnant en argumant le nombre de groupe de victimes
+```bash
+java -jar target/ClientSMTP-1.0.jar  <nGroup>
+```
+9. Vérifier que les emails ont bien été envoyés en regardant votre navigateur web.
+
+
+
+## Configuration du projet
+### Ajouter des messages
+Le répértoire contenant les différents fichiers de messages est le répértoire API-2021-SMTP/src/configuration/messages
+Chaque message est configuré à partir d'un fichier .txt, il faut donc créer un nouveau fichier pour chaque nouveau message.
+
+Concernant le format des fichiers contenant des messages, la première ligne constitue le sujet et le reste du fichier le corps du message.
+
+Exemple de fichier de message:
+
+\<début du fichier>Ceci est le sujet
+Ceci est le corps du message
+
+Ceci est toujours le corps du message et le retour à la ligne fonctionne\<Fin du fichier>
+
+### Ajouter des victimes
+Le fichier contenant la liste des victimes est le fichier API-2021-SMTP/src/configuration/victims.txt
+Pour y ajouter une victime, il suffit d'ajouter une nouvelle ligne avec l'adresse email voulue.
+
+### Définir le nombre de groupes de victimes
+Le nombre de groupes est à renseigner en argument de la ligne de commande lors du lancement du client.
+
+En reprenant ce qui a été dit plus tôt, pour exécuter l'application client, il faut se rendre dans le répertoire API-2021-SMTP et utiliser la commande java -jar target/ClientSMTP-1.0.jar  <nGroup>
+
+## Description et points clés de l'implémentation.
+
+
+

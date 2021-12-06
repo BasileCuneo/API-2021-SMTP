@@ -53,7 +53,7 @@ public class ConfigManager {
         String pathV = rootPath + victimsPath;
         String pathM = rootPath + messagesPath;
         if( !(new File(pathV).exists() && new File(pathM).exists() && new File(pathM).isDirectory())){
-            System.out.println("Problem in the files configuration");
+            Logger.getAnonymousLogger().log(Level.SEVERE,"Problem in the files configuration");
             return;
         }
         BufferedReader readerVictims;

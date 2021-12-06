@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isWhitespace;
+import static java.lang.Integer.parseInt;
 
 /**
  * Calculator client implementation
