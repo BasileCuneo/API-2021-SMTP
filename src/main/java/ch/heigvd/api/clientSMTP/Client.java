@@ -25,8 +25,20 @@ public class Client {
      * @param args no args required
      */
     public static void main(String[] args)  {
+        int nGroups = 0;
+        try{//ouais et ocmme ça on a l'usage que 1 fois c'est mieux, tu as raison
+            if(args.length != 1){
+                throw new IllegalArgumentException("Usage: java -jar client <nGroup>");
 
-        ConfigManager config = new ConfigManager("/Users/joris/Documents/école/HEIG-VD/Cours/semester-3/API/labo/API-2021-SMTP/target/classes/ch/heigvd/api/clientSMTP", 4);
+            }
+            nGroups = parseInt(args[0]);
+        }catch(NumberFormatException e){
+            System.out.println("Usage: java -jar client <nGroup>");
+            return;
+        }
+        ConfigManager config = new ConfigManager("src/configuration",
+                                                 nGroups);
+        LOG.log(Level.INFO,"Configuration ok");
 
         System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
 
