@@ -116,13 +116,14 @@ Concernant le format des fichiers contenant des messages, la première ligne con
 
 Exemple de fichier de message:
 
-\<début du fichier>Ceci est le sujet
+<début du fichier>Ceci est le sujet
 Ceci est le corps du message
 
-Ceci est toujours le corps du message et le retour à la ligne fonctionne\<Fin du fichier>
+Ceci est toujours le corps du message et le retour à la ligne fonctionne<Fin du fichier>
 
 ### Ajouter des victimes
 Le fichier contenant la liste des victimes est le fichier API-2021-SMTP/src/configuration/victims.txt
+
 Pour y ajouter une victime, il suffit d'ajouter une nouvelle ligne avec l'adresse email voulue.
 
 ### Définir le nombre de groupes de victimes
@@ -131,6 +132,19 @@ Le nombre de groupes est à renseigner en argument de la ligne de commande lors 
 En reprenant ce qui a été dit plus tôt, pour exécuter l'application client, il faut se rendre dans le répertoire API-2021-SMTP et utiliser la commande java -jar target/ClientSMTP-1.0.jar  <nGroup>
 
 ## Description et points clés de l'implémentation.
+
+Notre implémentation est séparée en deux parties: le client et le configManager.
+
+### Client
+
+Premièrement, le client va vérifier que le nombre de groupes a bien été saisi en argument de la ligne de commande.
+
+Le client fera ensuite appel à la deuxième partie: le configManager afin de configurer les différentes fonctionnalités de l'applications.
+
+Pour finir, le client met en place tout ce qui est nécessaire à la communication avec le serveur (socket, inputStream, outputStream) et fera appel à la méthode sendMail.
+
+La méthode sendMail est basée sur la procédure utilisée pour envoyer un email via un serveur smtp.
+
 
 
 
