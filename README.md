@@ -146,6 +146,14 @@ Pour finir, le client met en place tout ce qui est nécessaire à la communicati
 
 La méthode sendMail est basée sur la procédure utilisée pour envoyer un email via un serveur smtp.
 
+## Structure du client
+La méthode sendMail envois au bufferedOutputStream le message à envoyer, ce dernier est composé a partir des fonctions 
+unitaires qui sont définies dans client.
+![structure Client](./figures/Client.png)
 
+## Structure du ConfigManager
 
-
+Les différents fichiers de configuration sont lu dans le constructeur et les listes de victimes et de messages sont remplies
+Les différentes listes sont ensuites mélangées et des groupes sont générés.
+On peut récupérer les groupes grâce à la méthode
+![structure ConfigManager](./figures/ConfigManager.png)
