@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +20,7 @@ public class Client {
 
     private static final Logger LOG = Logger.getLogger(Client.class.getName());
     private static String crlf = "\r\n";
-    private static String utfEnable = "Content-Type: text/html; charset=UTF-8";
+    private static String utfEnable = "Content-Type: text/plain; charset=UTF-8";
     /**
      * Main function to run client
      *
@@ -211,10 +212,14 @@ public class Client {
             result.append(addr).append(", ");
 
         }
+        //delete the last ", "
         result.deleteCharAt(result.toString().length() - 2);
         result.append(crlf);
+        String b64Subject =
+                Base64.getEncoder().encodeToString(subject.getBytes(StandardCharsets.UTF_8));
+        result.append("Subject: =?utf-8?B?")
+                .append(b64Subject).append("?=").append(crlf).append(crlf);
 
-        result.append("Subject: ").append(subject).append(crlf).append(crlf);
         result.append(body);
         result.append(crlf);
         result.append(genQuit());
