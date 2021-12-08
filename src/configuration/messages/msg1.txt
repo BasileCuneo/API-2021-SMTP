@@ -1,7 +1,7 @@
-ceci est le sujet
+ceci est le avec des accent éàèé sujet
 voici le corps du mail
 on peut mettre des retours
 à la lignes
-
+éàèéàéèéà
 et tout fonctionne !
 

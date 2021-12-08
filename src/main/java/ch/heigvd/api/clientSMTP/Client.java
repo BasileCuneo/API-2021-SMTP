@@ -124,7 +124,7 @@ public class Client {
                 System.out.println("RCPT TO accepted");
             }
             clientOut.write("DATA"+crlf);
-            clientOut.write(utfEnable+crlf+crlf);
+            clientOut.write(utfEnable+crlf);
             clientOut.flush();
             if(!checkResponse(clientIn, "354")){
                 System.out.println("DATA not accepted");

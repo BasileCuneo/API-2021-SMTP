@@ -1,9 +1,9 @@
-Le sujet ceci est
+Le sujet ceci est éàèéàéèéà
 En Yoda, il est écrit
-
+éàèéàéèéà
 Ecrire sur plusieurs lignes
 
-tu peux
+tu peuxéàèéàéèéà
 Chouette c'est !
 Utf-8 compatible java est
 En théorie ceci fonctionne
