@@ -19,6 +19,7 @@ public class Client {
 
     private static final Logger LOG = Logger.getLogger(Client.class.getName());
     private static String crlf = "\r\n";
+    private static String utfEnable = "Content-Type: text/html; charset=UTF-8";
     /**
      * Main function to run client
      *
@@ -123,6 +124,7 @@ public class Client {
                 System.out.println("RCPT TO accepted");
             }
             clientOut.write("DATA"+crlf);
+            clientOut.write(utfEnable+crlf+crlf);
             clientOut.flush();
             if(!checkResponse(clientIn, "354")){
                 System.out.println("DATA not accepted");
