@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
+<classDiagram>
+  <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="API-SMTP">
+    <inheritance id="4093" innerClass="true">
+      <child>4092</child>
+      <parent>4090</parent>
+    </inheritance>
+    <entity entityType="CLASS" id="4092" isAbstract="false" name="MailStruct" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="body" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="subject" type="String" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="ENUM" id="4091" name="Enum"/>
+    <entity entityType="CLASS" id="4090" isAbstract="false" name="ConfigManager" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="addresses" type="ArrayList&lt;String&gt;" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="messages" type="ArrayList&lt;MailStruct&gt;" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="groupsEmail" type="ArrayList&lt;ArrayList&lt;String&gt;&gt;" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="victimsPath" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="messagesPath" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="nGroups" type="int" visibility="PRIVATE"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="ConfigManager" returnType="" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="rootPath" type="String"/>
+        <variable const="false" name="n" type="int"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="generateGroups" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getGroupsEmail" returnType="ArrayList&lt;ArrayList&lt;&lt;String&gt;&gt;" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getRandomMail" returnType="MailStruct" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="ENUM" id="3943" name="Enum"/>
+    <entity entityType="ENUM" id="3866" name="Enum"/>
+    <entity entityType="ENUM" id="3827" name="Enum"/>
+    <entity entityType="CLASS" id="2983" isAbstract="false" name="Client" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="true" name="LOG" type="Logger" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="crlf" type="String" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="true" name="main" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="args" type="String[]"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="sendMail" returnType="boolean" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="from" type="String"/>
+        <variable const="false" name="to" type="List&lt;String&gt;"/>
+        <variable const="false" name="fakeFrom" type="String"/>
+        <variable const="false" name="Subject" type="String"/>
+        <variable const="false" name="message" type="String"/>
+        <variable const="false" name="clientIn" type="BufferedReader"/>
+        <variable const="false" name="clientOut" type="BufferedWriter"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="checkEHLO" returnType="boolean" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="client" type="BufferedReader"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="checkError" returnType="boolean" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="client" type="BufferedReader"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="checkResponse" returnType="boolean" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="client" type="BufferedReader"/>
+        <variable const="false" name="expectedCode" type="String"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="ehlo" returnType="String" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="receiverAddr" type="String"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="genMailFrom" returnType="String" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="senderAddr" type="String"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="genRcptTo" returnType="String" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="receiverAddr" type="String"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="genMessage" returnType="String" view="DEFAULT" visibility="PRIVATE">
+        <variable const="false" name="fakeFrom" type="String"/>
+        <variable const="false" name="to" type="List&lt;String&gt;"/>
+        <variable const="false" name="subject" type="String"/>
+        <variable const="false" name="String" type="body"/>
+      </method>
+      <method isAbstract="false" isStatic="true" name="genQuit" returnType="String" view="DEFAULT" visibility="PRIVATE"/>
+    </entity>
+  </diagramElements>
+  <umlView grid="10" name="Main view" open="true">
+    <relationView color="-12566464" relationId="4093">
+      <line>
+        <point>
+          <x>1271</x>
+          <y>351</y>
+        </point>
+        <point>
+          <x>1271</x>
+          <y>316</y>
+        </point>
+      </line>
+    </relationView>
+    <componentView color="-2079" componentID="2983" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>80</x>
+        <y>110</y>
+        <w>890</w>
+        <h>235</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="4090" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>1100</x>
+        <y>110</y>
+        <w>340</w>
+        <h>205</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="4092" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>1190</x>
+        <y>350</y>
+        <w>150</w>
+        <h>85</h>
+      </geometry>
+    </componentView>
+  </umlView>
+</classDiagram>

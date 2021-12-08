@@ -73,15 +73,10 @@ En reprenant ce qui a été dit plus tôt, pour exécuter l'application client, 
 
 Notre implémentation est séparée en deux parties: le Client et le configManager.
 
-### Client
+Voici un graphique UML illustrant notre implémentation:
 
-Premièrement, le client va vérifier que le nombre de groupes a bien été saisi en argument de la ligne de commande.
+![structure Client](./figures/uml.png)
 
-Le client fera ensuite appel à la deuxième partie: le configManager afin de configurer les différentes fonctionnalités de l'applications.
-
-Pour finir, le client met en place tout ce qui est nécessaire à la communication avec le serveur (socket, inputStream, outputStream) et fera appel à la méthode sendMail.
-
-La méthode sendMail est basée sur la procédure utilisée pour envoyer un email via un serveur smtp.
 
 ## Structure du client
 

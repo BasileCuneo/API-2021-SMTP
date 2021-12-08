@@ -19,7 +19,7 @@ import static java.lang.Integer.parseInt;
 public class Client {
 
     private static final Logger LOG = Logger.getLogger(Client.class.getName());
-    private static String crlf = "\r\n";
+    private static final String crlf = "\r\n";
     private static String utfEnable = "Content-Type: text/plain; charset=UTF-8";
     /**
      * Main function to run client
